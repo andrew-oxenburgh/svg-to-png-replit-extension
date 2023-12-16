@@ -17,17 +17,13 @@ function Component() {
 
   const onRead = async () => {
     addStatus("onRead");
-    const imgEle = document.querySelector("#img");
-    const canvasEle = document.querySelector("#canvas");
-    addStatus(imgEle + "");
-    if (!imgEle || !canvasEle) {
-      addStatus("error");
-      return;
-    }
+    // can't use ref's with semantic-ui-react
+    const imgEle = document.querySelector("#img") as HTMLImageElement
+    const canvasEle = document.querySelector("#canvas") as HTMLCanvasElement
     addStatus("set up correctly");
     imgEle.onload = async () => {
       addStatus("loaded");
-      await canvasEle.getContext("2d").drawImage(imgEle, 0, 0);
+      canvasEle.getContext("2d")?.drawImage(imgEle, 0, 0, 200, 200, 0, 0, 200, 200);
       const data = canvasEle.toDataURL("image/png)");
       utils.saveTo("test.png", data);
     };
@@ -49,9 +45,9 @@ function Component() {
       <Header>Replit Extension</Header>
       <Input type="text" />
       <Button onClick={onRead}>read file</Button>
-      <Image id="img" src={utils.dataUrlBlank} />
-      <canvas id="canvas"/>
-      <Image src="./test.png" />
+      <Image id="img" />
+      <canvas id="canvas" width="200" height="200"/>
+      <Image src="./test.png" size="small" centered/>
       {status.map((s, index) => (
         <p key={index}>{s}</p>
       ))}

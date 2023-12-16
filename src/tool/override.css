@@ -5,14 +5,11 @@ html {
 
 .image {
    border: 1px solid var(--border-color);
-   width: 10em;
-   height: 10em;
+   /* width: 10em;
+   height: 10em;*/
    margin: 0.5em 0;
 }
 
 canvas {
-   border: 1px solid var(--border-color);
-   width: 10em;
-   height: 10em;
-   margin: 0.5em 0;
+   /* display: none; */
 }
