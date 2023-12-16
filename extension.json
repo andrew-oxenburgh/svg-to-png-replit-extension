@@ -1,0 +1,23 @@
+{
+  "name": "icons-from-svg",
+  "description": "Use an SBG file to create icons",
+  "icon": "/replit.svg",
+  "tools": [
+    {
+      "name": "icons-from-svg",
+      "handler": "/tool",
+      "icon": "/replit.svg"
+    }
+  ],
+  "scopes": [
+    {
+      "name": "read",
+      "reason": "Read any file in your Repl"
+    },
+
+    {
+      "name": "write-exec",
+      "reason": "Write to any file in your Repl and execute any code"
+    }
+  ]
+}
