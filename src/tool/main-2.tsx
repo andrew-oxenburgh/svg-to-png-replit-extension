@@ -21,15 +21,15 @@ const useStyles = createUseStyles({
       fontWeight: "bold",
     },
   },
-  postView:{
-     width: '100',
-    border: '1px solid #ccc',
+  postView: {
+    width: "100",
+    border: "1px solid #ccc",
   },
-  preView:{
-     width: '100',
-    border: '1px solid #ccc',
+  preView: {
+    width: "100",
+    border: "1px solid #ccc",
   },
-canvas: {
+  canvas: {
     // width: "10em",
     // height: "10em",
     // width: "10em",
@@ -84,8 +84,13 @@ function Component() {
       <button onClick={onSave}>save</button>
 
       <img src={svg} ref={img} className={classes.preView} />
-      <canvas ref={canvas} width="1000" height="1000" className={classes.canvas} />
-    <img className={classes.postView} src="./test.png"/>
+      <canvas
+        ref={canvas}
+        width="1000"
+        height="100"
+        className={classes.canvas}
+      />
+      <img className={classes.postView} src="./test.png" />
       {status.map((s, index) => (
         <p key={index}>{s}</p>
       ))}
