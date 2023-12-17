@@ -2,7 +2,7 @@
   "name": "icons-from-svg",
   "description": "Use an SVG file to create icons",
   "icon": "icon-90.png",
-  longDescription: "Use an SVG file to create icons",
+  "longDescription": "Use an SVG file to create icons",
   "tools": [
     {
       "name": "icons-from-svg",
@@ -21,13 +21,11 @@
       "reason": "Need to write the PNG out."
     }
   ],
-  features: [
-
+  "features": [
     {
-      title: "Create a bunch of PNG's from an existing SVG file.",
-      body: "Use an SVG file to create icons",
-      image: "/screen-shot.png"
+      "title": "Create a bunch of PNG's from an existing SVG file.",
+      "body": "Use an SVG file to create icons",
+      "image": "/screen-shot.png"
     }
-
-  ],
+  ]
 }
