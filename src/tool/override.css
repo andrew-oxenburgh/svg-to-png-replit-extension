@@ -8,8 +8,11 @@ html {
    /* width: 10em;
    height: 10em;*/
    margin: 0.5em 0;
+   object-fit: cover;
 }
 
 canvas {
-   display: none;
+   /* display: none; */
+   object-fit: cover;
+   background: red;
 }

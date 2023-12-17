@@ -9,7 +9,7 @@ import "semantic-ui-css/semantic.min.css";
 import "./override.css";
 function Component() {
   const [status, setStatus] = useState<string[]>(["started"]);
-  const [fileName, setFileName] = useState<string>("examples/sample.svg");
+  const [fileName, setFileName] = useState<string>("examples/1.svg");
   const [fileFound, setFileFound] = useState<boolean>(true);
 
   useEffect(() => {
@@ -42,12 +42,13 @@ function Component() {
     addStatus("set up correctly");
     imgEle.onload = async () => {
       addStatus("loaded");
-      canvasEle
-        .getContext("2d")
-        ?.drawImage(imgEle, 0, 0, 200, 200, 0, 0, 200, 200);
+      const ctx = canvasEle.getContext("2d");
+      ctx.fillStyle = "orange";
+      ctx.fillRect(0, 0, canvasEle.width, canvasEle.height);
+      ctx.drawImage(imgEle, 0, 0, 200, 200);
       const data = canvasEle.toDataURL("image/png)");
-      utils.saveTo("test.png", data);
-      addStatus('saved')
+      utils.saveTo("public/test.png", data);
+      addStatus("saved");
     };
 
     const { error, content } = await fs.readFile(fileName);
@@ -68,7 +69,7 @@ function Component() {
     setFileName(newFileName);
     const { error } = await fs.readFile(newFileName);
     addStatus(">>>>>>" + error);
-    const found =! (error && error.length > 0);
+    const found = !(error && error.length > 0);
     setFileFound(found);
   };
 
@@ -84,7 +85,7 @@ function Component() {
       <p>{fileName}</p>
       <Image id="img" />
       <canvas id="canvas" width="200" height="200" />
-      <Image src="./test.png" size="small" centered />
+      <Image src="/test.png" size="small" centered />
       {status.map((s, index) => (
         <p key={index}>{s}</p>
       ))}
