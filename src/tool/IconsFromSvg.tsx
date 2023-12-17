@@ -111,8 +111,7 @@ function IconsFromSvg() {
         </p>
         <p>It will overwrite anything already in there, so be warned.</p>
       </Segment>
-
-      <Header center size="large"></Header>
+      <Header textAlign="center" size="large"></Header>
       <Header size="small">Create png icons from an svg</Header>
       <Form>
         <Form.Field>
@@ -132,7 +131,13 @@ function IconsFromSvg() {
       </Form>
       <Image id="img" size="small" centered />
       <canvas id="canvas" width={side} height={side} />
-      <a target="_blank" href="https://icons8.com/icon/59770/create">Create</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+      <a target="_blank" href="https://icons8.com/icon/59770/create">
+        Create
+      </a>{" "}
+      icon by{" "}
+      <a target="_blank" href="https://icons8.com">
+        Icons8
+      </a>
     </Page>
   );
 }
