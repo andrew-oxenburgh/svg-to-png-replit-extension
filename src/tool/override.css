@@ -13,3 +13,22 @@ canvas {
    object-fit: cover;
    background: red;
 }
+
+.mono {
+   font-weight: bold;
+}
+
+.page {
+   padding-top: 1.5em;
+}
+
+.saved {
+   color: green;
+   font-size: 1.5em;
+   minHeight: 3em;
+}
+.saving {
+   color: red;
+   font-size: 1.5em;
+   min-height: 3em;
+}
