@@ -1,7 +1,7 @@
 import { HandshakeProvider } from "@replit/extensions-react";
 import { createRoot } from "react-dom/client";
 import { useReplit } from "@replit/extensions-react";
-import SvgToPng from "./SvgToPng";
+import IconsFromSvg from "./IconsFromSvg";
 function App() {
   const { status, error, replit } = useReplit();
 
@@ -13,7 +13,7 @@ function App() {
     return <div>An error occurred: {error?.message}</div>;
   }
 
-  return <SvgToPng />;
+  return <IconsFromSvg />;
 }
 
 createRoot(document.getElementById("root")).render(

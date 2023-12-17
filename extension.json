@@ -1,6 +1,6 @@
 {
   "name": "icons-from-svg",
-  "description": "Use an SBG file to create icons",
+  "description": "Use an SVG file to create icons",
   "icon": "/replit.svg",
   "tools": [
     {

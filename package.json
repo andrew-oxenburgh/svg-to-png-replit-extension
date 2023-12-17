@@ -1,13 +1,13 @@
 {
-  "name": "replit-extension-template",
-  "version": "0.0.1",
-  "private": true,
-  "main": "index.js",
+  "name": "icons-from-svg",
+  "description": "Use an SVG file to create icons",
+  "version": "1.0.1",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "npx prettier --write src/*",
     "clean": "rm -rf dist/",
-    "type:check": "tsc --noEmit"
+    "type:check": "tsc --noEmit",
+    "build": "replkit build"
   },
   "keywords": [],
   "author": "",

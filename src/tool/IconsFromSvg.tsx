@@ -30,7 +30,7 @@ enum SavingState {
   error,
 }
 
-function SvgToPng() {
+function IconsFromSvg() {
   const [srcFile, setSrcName] = useState<string>("examples/1.svg");
   const [destFile, setDestFile] = useState<string>("icons/icon-200x200.png");
   const [fileFound, setFileFound] = useState<boolean>(true);
@@ -62,7 +62,7 @@ function SvgToPng() {
     const canvasEle = document.querySelector("#canvas") as HTMLCanvasElement;
     imgEle.onload = async () => {
       const ctx = canvasEle.getContext("2d");
-      ctx.fillStyle = "orange";
+      ctx.fillStyle = "white";
       ctx.fillRect(0, 0, canvasEle.width, canvasEle.height);
       ctx.drawImage(imgEle, 0, 0, side, side);
       const data = canvasEle.toDataURL("image/png)");
@@ -99,11 +99,10 @@ function SvgToPng() {
   };
 
   let buttonStatus = fileFound ? { primary: true } : { disabled: true };
-  // const disabled = "";
   return (
     <Page>
       <Header textAlign="centered" size="huge">
-        svg-to-png
+        icons-from-svg
       </Header>
       <Segment attached>
         <p>
@@ -117,7 +116,7 @@ function SvgToPng() {
       <Header size="small">Create png icons from an svg</Header>
       <Form>
         <Form.Field>
-          <label>Enter filename</label>
+          <label>Enter source file</label>
           <Input type="text" onChange={onFileNameChange} value={srcFile} />
         </Form.Field>
         <Form.Field>
@@ -137,6 +136,6 @@ function SvgToPng() {
   );
 }
 
-render(<SvgToPng />, document.getElementById("root") as Element);
+// render(<IconsFromSvg />, document.getElementById("root") as Element);
 
-export default SvgToPng;
+export default IconsFromSvg;
