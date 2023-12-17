@@ -34,3 +34,8 @@ isExtension = true
 buildCommand = "replkit build"
 outputDirectory = "./dist"
 staticDirectory = "./public"
+extensionID = "a26ef89f-e580-433d-b8c6-ffe13da26a1a"
+
+[deployment]
+deploymentTarget = "static"
+publicDir = "dist"
