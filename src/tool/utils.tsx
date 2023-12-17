@@ -60,7 +60,7 @@ export const saveTo = async (filename: string, img: string) => {
   var data = img.split(',')[1]
 
   console.log('saving this = ' + img.substring(0, 50))
-  await fs.writeFile(filename, base64ToArrayBuffer(data));
+  await fs.writeFile(filename, base64ToArrayBuffer(data.trim()));
 };
 
 export const logo = `
