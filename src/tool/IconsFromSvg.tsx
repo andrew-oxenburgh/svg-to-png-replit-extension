@@ -101,7 +101,7 @@ function IconsFromSvg() {
   let buttonStatus = fileFound ? { primary: true } : { disabled: true };
   return (
     <Page>
-      <Header textAlign="centered" size="huge">
+      <Header textAlign="center" size="huge">
         icons-from-svg
       </Header>
       <Segment attached>

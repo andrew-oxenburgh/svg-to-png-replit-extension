@@ -2,6 +2,7 @@
   "name": "icons-from-svg",
   "description": "Use an SVG file to create icons",
   "icon": "icon-90.png",
+  longDescription: "Use an SVG file to create icons",
   "tools": [
     {
       "name": "icons-from-svg",
@@ -12,12 +13,12 @@
   "scopes": [
     {
       "name": "read",
-      "reason": "Read any file in your Repl"
+      "reason": "Need to read your SVG file"
     },
 
     {
       "name": "write-exec",
-      "reason": "Write to any file in your Repl and execute any code"
+      "reason": "Need to write the PNG out."
     }
   ],
   features: [
@@ -29,5 +30,4 @@
     }
 
   ],
-  longDescription: "Use an SVG file to create icons"
 }
