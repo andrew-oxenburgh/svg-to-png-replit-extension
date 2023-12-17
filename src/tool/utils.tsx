@@ -41,7 +41,7 @@ export const svgBasketBall = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.
       </svg>`;
 
 export const svgEncode = (content) => {
-   return svgPrefix + content.replace(/\s+/g, ' ')
+   return svgPrefix + content.replace(/\s+/g, ' ').replaceAll('#', "%23")
 }
 
 export const svgChickenEncoded = svgPrefix + svgChicken.replaceAll(/\s+/g, " ");
