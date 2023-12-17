@@ -1,7 +1,7 @@
 {
   "name": "icons-from-svg",
   "description": "Use an SVG file to create icons",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "npx prettier --write src/*",
@@ -12,18 +12,14 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
+  "devDependencies": {
     "@replit/extensions": "^1.10.0",
     "@replit/extensions-react": "^0.6.0",
     "@replit/replkit": "^0.0.7",
-    "buffer-from": "^1.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-jss": "^10.10.0",
     "semantic-ui-css": "^2.5.0",
-    "semantic-ui-react": "^2.1.5"
-  },
-  "devDependencies": {
+    "semantic-ui-react": "^2.1.5",
     "@types/react": "^18.2.31",
     "@types/react-dom": "^18.2.14"
   }

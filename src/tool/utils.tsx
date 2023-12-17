@@ -57,8 +57,6 @@ export function base64ToArrayBuffer(base64) {
 export const saveTo = async (filename: string, img: string) => {
   await fs.createDir('icons')
   var data = img.split(',')[1]
-
-  console.log('saving this = ' + img.substring(0, 50))
   await fs.writeFile(filename, base64ToArrayBuffer(data.trim()));
 };
 
