@@ -61,12 +61,21 @@ function CreateTranslation({ width, height, content, onTranslation, save }) {
 }
 
 function SvgTx() {
-  const [srcFile, setSrcName] = useState<string>("examples/1.svg");
-  const [destFile, setDestFile] = useState<string>(utils.saveToFileName(utils.saveToDirectory, 200));
-  const [content, setContent] = useState<string>('');
+  const [srcFile, setSrcName] = useState<string>("examples/1.sv");
+  const [destFile, setDestFile] = useState<string>(
+    utils.saveToFileName(utils.saveToDirectory, 32),
+  );
+  const [content, setContent] = useState<string>("");
   const [fileFound, setFileFound] = useState<boolean>(true);
   const [saving, setSaving] = useState<SavingState>(SavingState.saved);
-  const [side, setSide] = useState<number>(200);
+  const [side, setSide] = useState<number>(32);
+
+  useEffect(() => {
+    async function check() {
+      await handleNameChange(srcFile);
+    }
+    check();
+  }, [srcFile]);
 
   useEffect(() => {
     const run = async () => {
@@ -96,12 +105,19 @@ function SvgTx() {
     setSaving(SavingState.saving);
   };
 
+  const handleNameChange = async (filename: string) => {
+    const { error } = await fs.readFile(filename);
+    const isFound = !(error && error.length > 0);
+    if (srcFile !== filename) {
+      setSrcName(filename);
+    }
+    if (isFound !== fileFound) {
+      setFileFound(isFound);
+    }
+  };
   const onFileNameChange = async (e: any) => {
     const newFileName = e.target.value;
-    setSrcName(newFileName);
-    const { error } = await fs.readFile(newFileName);
-    const found = !(error && error.length > 0);
-    setFileFound(found);
+    await handleNameChange(newFileName);
   };
 
   const changeSide = (n: number) => {
@@ -117,10 +133,20 @@ function SvgTx() {
   const onTranslation = async (tx: string) => {
     utils.saveTo(destFile, tx);
     setSaving(SavingState.saved);
-    console.log("saved");
   };
 
-  let buttonStatus = fileFound ? { primary: true } : { disabled: true };
+  const isValidSide = () => {
+    return;
+  };
+
+  const isValidForm = () => {
+    return fileFound && isValidSide();
+  };
+
+  let sideValid = side >= 16 && side <= 2048;
+  let formValid = fileFound && sideValid;
+  let buttonStatus = formValid ? { primary: true } : { disabled: true };
+  // let formValid = false;
   return (
     <Page>
       <Header textAlign="center" size="huge">
@@ -135,19 +161,55 @@ function SvgTx() {
       </Segment>
       <Header textAlign="center" size="large"></Header>
       <Header size="small">Create png icons from an svg</Header>
-      <Form>
-        <Form.Field>
-          <label>Enter source file</label>
-          <Form.Input type="text" onChange={onFileNameChange} value={srcFile} />
-        </Form.Field>
-        <Form.Field>
-          <label>icon size</label>
-          <Input type="number" onChange={onChangeSide} value={side} />
-        </Form.Field>
+      <Form success={formValid}>
+        <Form.Field
+          id="source-file"
+          control={Input}
+          label="Source File"
+          value={srcFile}
+          onChange={onFileNameChange}
+          error={
+            fileFound
+              ? false
+              : {
+                  content: "please choose a valid sourcefile",
+                  pointing: "below",
+                }
+          }
+        />
+        <Form.Field
+          id="icon-size"
+          control={Input}
+          type="number"
+          label="Icon Size"
+          value={side}
+          onChange={onChangeSide}
+          error={
+            sideValid
+              ? false
+              : {
+                  content: "choose a size of between 16 and 2048",
+                  // pointing: "below",
+                }
+          }
+        />
+
+        {formValid && (
+          <Message
+            success={formValid}
+            header="Ready? Ready!!"
+            content="create a beautiful icon!"
+          />
+        )}
         <Button onClick={onRead} {...buttonStatus}>
-          Create Icon
+          {formValid ? (
+            <p>create icon at {<Mono primary>{destFile}</Mono>}</p>
+          ) : (
+            "compete the form"
+          )}
         </Button>
       </Form>
+      <p className={saving === SavingState.saving ? "saving" : "saved"}></p>
       <CreateTranslation
         width={side}
         height={side}

@@ -1,8 +1,16 @@
 {
-  "name": "icons-from-svg",
-  "description": "Use an SVG file to create icons",
+  "name": "Svg Translate",
+  "description": "Use an SVG file to create other formats",
   "icon": "icon-90.png",
   "longDescription": "Use an SVG file to create icons",
+  "authorEmail": "andrew.oxenburgh@gmail.com",
+  "tags": ["svg", "icon", "icon-svg", "png"],
+  "coverImages": [
+    {
+      "label": "Screen Shot",
+      "path": "/screen-shot.png"
+    }
+  ],
   "tools": [
     {
       "name": "icons-from-svg",
@@ -15,7 +23,6 @@
       "name": "read",
       "reason": "Need to read your SVG file"
     },
-
     {
       "name": "write-exec",
       "reason": "Need to write the PNG out."
