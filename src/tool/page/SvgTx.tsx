@@ -3,7 +3,7 @@ import * as utils from "./utils";
 import { render } from "react-dom";
 import { useReplit } from "@replit/extensions-react";
 import { fs } from "@replit/extensions";
-
+import { Mono, Page } from "../components/Widgets";
 import {
   Header,
   Container,
@@ -12,17 +12,10 @@ import {
   Button,
   Form,
   Segment,
+  Message,
 } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import "./override.css";
-
-function Mono({ children }) {
-  return <code className="mono">{children}</code>;
-}
-
-function Page({ children }) {
-  return <Container className="page">{children}</Container>;
-}
 
 enum SavingState {
   saved,
@@ -30,9 +23,47 @@ enum SavingState {
   error,
 }
 
-function IconsFromSvg() {
+interface Props {
+  width: number;
+  height: number;
+  content: string;
+  onTranslation: (tx: string) => void;
+  save: boolean;
+}
+
+function CreateTranslation({ width, height, content, onTranslation, save }) {
+  useEffect(() => {
+    async function tx() {
+      if (!save) return;
+      console.log(`${width}x${height}, ${save}`);
+
+      const imgEle = document.querySelector("#img") as HTMLImageElement;
+      const canvasEle = document.querySelector("#canvas") as HTMLCanvasElement;
+      imgEle.onload = async () => {
+        console.log("loading");
+        const ctx = canvasEle.getContext("2d");
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, canvasEle.width, canvasEle.height);
+        ctx.drawImage(imgEle, 0, 0, width, height);
+        const data = canvasEle.toDataURL("image/png)");
+        onTranslation(data);
+      };
+      imgEle.src = content;
+    }
+    tx();
+  });
+  return (
+    <>
+      <Image id="img" size="small" centered />
+      <canvas id="canvas" width={width} height={height} />
+    </>
+  );
+}
+
+function SvgTx() {
   const [srcFile, setSrcName] = useState<string>("examples/1.svg");
-  const [destFile, setDestFile] = useState<string>("icons/icon-200x200.png");
+  const [destFile, setDestFile] = useState<string>(utils.saveToFileName(utils.saveToDirectory, 200));
+  const [content, setContent] = useState<string>('');
   const [fileFound, setFileFound] = useState<boolean>(true);
   const [saving, setSaving] = useState<SavingState>(SavingState.saved);
   const [side, setSide] = useState<number>(200);
@@ -41,7 +72,7 @@ function IconsFromSvg() {
     const run = async () => {
       const imgEle = document.querySelector("#img") as HTMLImageElement;
       if (!fileFound) {
-        imgEle.src = utils.dataUrlBlank;
+        imgEle.src = utils.dataUrlBlank(200);
         return;
       }
       const { error, content } = await fs.readFile(srcFile);
@@ -56,28 +87,13 @@ function IconsFromSvg() {
   }, [fileFound]);
 
   const onRead = async () => {
-    setSaving(SavingState.saving);
-    // can't use ref's with semantic-ui-react
-    const imgEle = document.querySelector("#img") as HTMLImageElement;
-    const canvasEle = document.querySelector("#canvas") as HTMLCanvasElement;
-    imgEle.onload = async () => {
-      const ctx = canvasEle.getContext("2d");
-      ctx.fillStyle = "white";
-      ctx.fillRect(0, 0, canvasEle.width, canvasEle.height);
-      ctx.drawImage(imgEle, 0, 0, side, side);
-      const data = canvasEle.toDataURL("image/png)");
-      utils.saveTo(destFile, data);
-      setSaving(SavingState.saved);
-    };
-
     const { error, content } = await fs.readFile(srcFile);
     if (error) {
       alert("error reading file");
       return;
     }
-    const enc = utils.svgEncode(content);
-
-    imgEle.src = enc;
+    setContent(utils.svgEncode(content));
+    setSaving(SavingState.saving);
   };
 
   const onFileNameChange = async (e: any) => {
@@ -90,12 +106,18 @@ function IconsFromSvg() {
 
   const changeSide = (n: number) => {
     setSide(n);
-    setDestFile(`icons/icon-${n}x${n}.png`);
+    setDestFile(utils.saveToFileName(utils.saveToDirectory, n));
   };
 
   const onChangeSide = (e: any) => {
     const sz = e.target.value;
     changeSide(parseInt(sz));
+  };
+
+  const onTranslation = async (tx: string) => {
+    utils.saveTo(destFile, tx);
+    setSaving(SavingState.saved);
+    console.log("saved");
   };
 
   let buttonStatus = fileFound ? { primary: true } : { disabled: true };
@@ -116,21 +138,23 @@ function IconsFromSvg() {
       <Form>
         <Form.Field>
           <label>Enter source file</label>
-          <Input type="text" onChange={onFileNameChange} value={srcFile} />
+          <Form.Input type="text" onChange={onFileNameChange} value={srcFile} />
         </Form.Field>
         <Form.Field>
           <label>icon size</label>
           <Input type="number" onChange={onChangeSide} value={side} />
         </Form.Field>
-        <p className={saving === SavingState.saving ? "saving" : "saved"}>
-          saving to <Mono>{destFile}</Mono>
-        </p>
         <Button onClick={onRead} {...buttonStatus}>
           Create Icon
         </Button>
       </Form>
-      <Image id="img" size="small" centered />
-      <canvas id="canvas" width={side} height={side} />
+      <CreateTranslation
+        width={side}
+        height={side}
+        content={content}
+        onTranslation={onTranslation}
+        save={saving === SavingState.saving}
+      />
       <a target="_blank" href="https://icons8.com/icon/59770/create">
         Create
       </a>{" "}
@@ -144,4 +168,4 @@ function IconsFromSvg() {
 
 // render(<IconsFromSvg />, document.getElementById("root") as Element);
 
-export default IconsFromSvg;
+export default SvgTx;
